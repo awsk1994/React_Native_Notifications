@@ -114,3 +114,13 @@ export default function App() {
 
 TODO: require manual testing
 
+## 300. Reacting to Background Notifications
+
+ - Now, let's try to make it possible to click on notifications even if **app is closed**.
+
+## 301. How Push Notification Works?
+
+**TODO!!**
+
+
+

@@ -13,15 +13,21 @@ Notifications.setNotificationHandler({  // this is executed for OS to know what 
 
 export default function App() {
   useEffect(() => {
-    // This function(.addNotificationReceivedListener) defines what to do when incoming notification is received and app is running.
-    // Set to subscription variable, so we can turn off notification in the future.
-    const subscription = Notifications.addNotificationReceivedListener(notification => {  
+    // Defines what to do when incoming notification is received and APP IS NOT RUNNING.
+    const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    // Defines what to do when incoming notification is received and APP IS RUNNING.
+    // Set to a variable, so we can turn off notification in the future.
+    const foregroundSubscription = Notifications.addNotificationReceivedListener(notification => {  
       console.log(notification)
     });
 
     // Clean up function, to avoid memory leak.
     return () => {
-      subscription.remove();
+      backgroundSubscription.remove();
+      foregroundSubscription.remove();
     }
   }, []);
 
