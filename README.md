@@ -74,7 +74,9 @@ const triggerNotificationHandler = () => {
 
 ## 298. Controlling How Notifications Are Displayed
 
-```
+ - As of right now, if we are on App A, and notification is triggered from App A, the notification will not show up. We can configure it so it shows up.
+
+```js
 Notifications.setNotificationHandler({  // this is executed for OS to know what to do, before we display to user.
   handleNotification: async () => { // use async function, so we return a promise.
     return {
@@ -86,4 +88,29 @@ Notifications.setNotificationHandler({  // this is executed for OS to know what 
 
 TODO: require manual testing
 
+
+## 299. Reacting to Foreground Notifications
+
+ - When user taps on the notification, we want to bring the user to our app. We will implement this here.
+
+
+ ```js
+export default function App() {
+ useEffect(() => {
+  // This function(.addNotificationReceivedListener) defines what to do when incoming notification is received and app is running.
+  // Set to subscription variable, so we can turn off notification in the future.
+  const subscription = Notifications.addNotificationReceivedListener(notification => {  
+    console.log(notification)
+  });
+
+  // Clean up function, to avoid memory leak.
+  return () => {
+    subscription.remove();
+  }
+}, []);
+};
+```
+ - Note that this only works if **app is already running**.
+
+TODO: require manual testing
 

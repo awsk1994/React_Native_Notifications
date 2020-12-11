@@ -12,6 +12,19 @@ Notifications.setNotificationHandler({  // this is executed for OS to know what 
 });
 
 export default function App() {
+  useEffect(() => {
+    // This function(.addNotificationReceivedListener) defines what to do when incoming notification is received and app is running.
+    // Set to subscription variable, so we can turn off notification in the future.
+    const subscription = Notifications.addNotificationReceivedListener(notification => {  
+      console.log(notification)
+    });
+
+    // Clean up function, to avoid memory leak.
+    return () => {
+      subscription.remove();
+    }
+  }, []);
+
   const triggerNotificationHandler = () => {
     Notifications.scheduleNotificationAsync({
       content: {
