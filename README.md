@@ -120,7 +120,8 @@ TODO: require manual testing
 
 ## 301. How Push Notification Works?
 
-**TODO!!**
+**TODO: For now, we don't need Push Notifications. Will stop here for now.**
 
+## 310. Push Notifications in non-Expo Managed Apps
 
-
+**TODO: Should figure out how to use expo-notifications in non-expo managed apps.
