@@ -118,6 +118,21 @@ TODO: require manual testing
 
  - Now, let's try to make it possible to click on notifications even if **app is closed**.
 
+```js
+// Defines what to do when incoming notification is received and APP IS NOT RUNNING.
+const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(response => {
+  console.log(response);
+});
+```
+
+```js
+// Clean up function, to avoid memory leak.
+return () => {
+  backgroundSubscription.remove();
+  foregroundSubscription.remove();
+}
+```
+
 ## 301. How Push Notification Works?
 
 **TODO: For now, we don't need Push Notifications. Will stop here for now.**
