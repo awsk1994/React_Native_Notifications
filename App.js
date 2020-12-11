@@ -3,6 +3,14 @@ import React from 'react';
 import { StyleSheet, Button, View } from 'react-native';
 import * as Notifications from 'expo-notifications';
 
+Notifications.setNotificationHandler({  // this is executed for OS to know what to do, before we display to user.
+  handleNotification: async () => { // use async function, so we return a promise.
+    return {
+      shouldShowAlert: true // this will enable notification even though our app is already running.
+    };
+  }
+});
+
 export default function App() {
   const triggerNotificationHandler = () => {
     Notifications.scheduleNotificationAsync({
