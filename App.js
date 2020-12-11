@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect} from 'react';
 import { StyleSheet, Button, View } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-Permissions';
+import * as Permissions from 'expo-permissions';
 
 Notifications.setNotificationHandler({  // this is executed for OS to know what to do, before we display to user.
   handleNotification: async () => { // use async function, so we return a promise.

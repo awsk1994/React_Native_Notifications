@@ -104,8 +104,6 @@ export default function App() {
 
 TODO: show screenshots. Test if works after able to run iOS simulator.
 
-
-
 ## 298. Controlling How Notifications Are Displayed
 
  - As of right now, if we are on App A, and notification is triggered from App A, the notification will not show up. We can configure it so it shows up.
