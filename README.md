@@ -19,7 +19,7 @@ Starting in Video 294.
  - Example: chat apps, email app, shopping app
 
 # Steps
-1. Video 296: Sending Local Notifications
+## 296: Sending Local Notifications
  - Initialize Expo
 
  - Install expo-notifications
@@ -68,5 +68,39 @@ const triggerNotificationHandler = () => {
 <img src="./img/first-notification.png" height="500px"/>
  - Note that if you click the trigger and stay in the app, you will **NOT** see the notification. You need to leave the app (or go to homescreen) to see the notification.
 
+ - For now, nothing is working on iOS. The next video will be crucial in setting up and making it work on iOS.
 
+## 297. Getting Permissions
+
+ - Install expo-permissions; helps us manage and work with permissions
+```
+expo install expo-permissions
+```
+
+```js
+import * as Permissions from 'expo-Permissions';
+```
+```js
+export default function App() {
+  useEffect(() => {
+      Permissions.getAsync(Permissions.NOTIFICATIONS)
+      .then((statusObj) => {
+        if(statusObj.status !== 'granted'){ // if not granted permission, we want to ask for it.
+          return Permissions.askAsync(Permissions.NOTIFICATIONS);
+        }
+        return statusObj;
+      })
+      .then((statusObj) => {
+        if(statusObj.status !== 'granted'){
+          return;  // TODO: Show alert/notification to user.
+        }
+      })  // only works on iOS.
+  }, []) ;
+```
+ - **useEffect:** The function passed to useEffect will run **after the render is committed to the screen**. 
+
+ - First .then function checks if we already have permission. If no permission, we ask for it.
+ - Second .then function checks if we got permission from the first .then. We can notify the user for a failed permission request in the if statement here.
+
+TODO: show screenshots. Test if works after able to run iOS simulator.
 
