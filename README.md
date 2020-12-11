@@ -72,6 +72,18 @@ const triggerNotificationHandler = () => {
 
 
 
-# 298. Controlling How Notifications Are Displayed
+## 298. Controlling How Notifications Are Displayed
+
+```
+Notifications.setNotificationHandler({  // this is executed for OS to know what to do, before we display to user.
+  handleNotification: async () => { // use async function, so we return a promise.
+    return {
+      shouldShowAlert: true // this will enable notification even though our app is already running.
+    };
+  }
+});
+```
+
+TODO: require manual testing
 
 
