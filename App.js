@@ -4,7 +4,16 @@ import { StyleSheet, Button, View } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-Permissions';
 
+Notifications.setNotificationHandler({  // this is executed for OS to know what to do, before we display to user.
+  handleNotification: async () => { // use async function, so we return a promise.
+    return {
+      shouldShowAlert: true // this will enable notification even though our app is already running.
+    };
+  }
+});
+
 export default function App() {
+
   // Essential to make it work on iOS.
   useEffect(() => {
      Permissions.getAsync(Permissions.NOTIFICATIONS)
@@ -20,6 +29,25 @@ export default function App() {
        }
      })
   }, []) ;
+
+  useEffect(() => {
+    // Defines what to do when incoming notification is received and APP IS NOT RUNNING.
+    const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    // Defines what to do when incoming notification is received and APP IS RUNNING.
+    // Set to a variable, so we can turn off notification in the future.
+    const foregroundSubscription = Notifications.addNotificationReceivedListener(notification => {  
+      console.log(notification)
+    });
+
+    // Clean up function, to avoid memory leak.
+    return () => {
+      backgroundSubscription.remove();
+      foregroundSubscription.remove();
+    }
+  }, []);
 
   const triggerNotificationHandler = () => {
     Notifications.scheduleNotificationAsync({

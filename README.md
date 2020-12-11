@@ -104,3 +104,73 @@ export default function App() {
 
 TODO: show screenshots. Test if works after able to run iOS simulator.
 
+
+
+## 298. Controlling How Notifications Are Displayed
+
+ - As of right now, if we are on App A, and notification is triggered from App A, the notification will not show up. We can configure it so it shows up.
+
+```js
+Notifications.setNotificationHandler({  // this is executed for OS to know what to do, before we display to user.
+  handleNotification: async () => { // use async function, so we return a promise.
+    return {
+      shouldShowAlert: true // this will enable notification even though our app is already running.
+    };
+  }
+});
+```
+
+TODO: require manual testing
+
+
+## 299. Reacting to Foreground Notifications
+
+ - When user taps on the notification, we want to bring the user to our app. We will implement this here.
+
+
+ ```js
+export default function App() {
+ useEffect(() => {
+  // This function(.addNotificationReceivedListener) defines what to do when incoming notification is received and app is running.
+  // Set to subscription variable, so we can turn off notification in the future.
+  const subscription = Notifications.addNotificationReceivedListener(notification => {  
+    console.log(notification)
+  });
+
+  // Clean up function, to avoid memory leak.
+  return () => {
+    subscription.remove();
+  }
+}, []);
+};
+```
+ - Note that this only works if **app is already running**.
+
+TODO: require manual testing
+
+## 300. Reacting to Background Notifications
+
+ - Now, let's try to make it possible to click on notifications even if **app is closed**.
+
+```js
+// Defines what to do when incoming notification is received and APP IS NOT RUNNING.
+const backgroundSubscription = Notifications.addNotificationResponseReceivedListener(response => {
+  console.log(response);
+});
+```
+
+```js
+// Clean up function, to avoid memory leak.
+return () => {
+  backgroundSubscription.remove();
+  foregroundSubscription.remove();
+}
+```
+
+## 301. How Push Notification Works?
+
+**TODO: For now, we don't need Push Notifications. Will stop here for now.**
+
+## 310. Push Notifications in non-Expo Managed Apps
+
+**TODO: Should figure out how to use expo-notifications in non-expo managed apps.
